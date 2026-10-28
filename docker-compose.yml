@@ -1,0 +1,48 @@
+# One command to run the whole site locally:  docker compose up --build
+# Then open http://localhost:8000 (admin panel: http://localhost:8000/admin).
+# Optional settings (Cloudinary, Gmail, admin password) go in a .env file next to this one,
+# see .env.example.
+
+services:
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: dusanteam
+      MARIADB_USER: dusanteam
+      MARIADB_PASSWORD: ${DB_PASSWORD:-dusanteam-local}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-dusanteam-root-local}
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  backend:
+    build: ./backend/dusanteam-backend
+    environment:
+      DB_URL: jdbc:mariadb://db:3306/dusanteam
+      DB_USER: dusanteam
+      DB_PASSWORD: ${DB_PASSWORD:-dusanteam-local}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      MAIL_USERNAME: ${MAIL_USERNAME:-}
+      MAIL_PASSWORD: ${MAIL_PASSWORD:-}
+      CLOUDINARY_NAME: ${CLOUDINARY_NAME:-}
+      CLOUDINARY_KEY: ${CLOUDINARY_KEY:-}
+      CLOUDINARY_SECRET: ${CLOUDINARY_SECRET:-}
+      ALLOWED_ORIGINS: http://localhost:8000
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend/dt-front
+    ports:
+      - "8000:80"
+    depends_on:
+      - backend
+
+volumes:
+  db-data:

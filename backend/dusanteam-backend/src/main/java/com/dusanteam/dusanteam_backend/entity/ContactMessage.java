@@ -1,0 +1,30 @@
+package com.dusanteam.dusanteam_backend.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "contact_messages")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class ContactMessage {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 254)
+    private String email;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String message;
+
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime sentAt;
+}

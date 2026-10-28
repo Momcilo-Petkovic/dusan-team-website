@@ -1,0 +1,21 @@
+# ---- Secrets: never commit these ----
+.env
+.env.local
+.env.production
+application-local.properties
+application-prod.properties
+
+# ---- Build output and dependencies ----
+node_modules/
+dist/
+target/
+
+# ---- Editors and OS ----
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# ---- Temporary review copy ----
+_review/

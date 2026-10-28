@@ -1,0 +1,13 @@
+package com.dusanteam.dusanteam_backend.repository;
+
+import com.dusanteam.dusanteam_backend.entity.HomeSlide;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface HomeSlideRepository extends JpaRepository<HomeSlide, Long> {
+
+    List<HomeSlide> findAllByOrderByIdAsc();
+}

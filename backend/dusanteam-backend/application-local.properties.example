@@ -1,0 +1,20 @@
+# Copy this file to application-local.properties (same folder, next to pom.xml) and fill in your values.
+# application-local.properties is gitignored, so your passwords never get committed.
+# Everything is optional: anything you leave out falls back to application.properties.
+
+# Database
+spring.datasource.username=root
+spring.datasource.password=your-mariadb-password
+
+# Gmail (contact form). Use a Gmail "app password", not your normal password.
+spring.mail.username=you@gmail.com
+spring.mail.password=your-16-character-app-password
+
+# Cloudinary (image hosting), from https://console.cloudinary.com
+cloudinary.cloud-name=your-cloud-name
+cloudinary.api-key=your-api-key
+cloudinary.api-secret=your-api-secret
+
+# Admin panel login
+app.admin.username=admin
+app.admin.password=choose-a-strong-password
